@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`macros 1. single call macro: 1. single call macro 1`] = `
+
+
+import { css } from '../../lib/macro';
+
+const styles = css\`
+  .box {
+    color: blue
+  }
+\`
+      
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _cssed_a from '../../.cssed/edb7e408acbb359c.module.css'
+const styles = _cssed_a
+
+`;
+
+exports[`macros 2. multi call macro: 2. multi call macro 1`] = `
+
+
+import { css } from '../../lib/macro';
+
+const blue = css\`
+.box {
+  color: blue;
+}
+\`;
+
+const red = css\`
+.box {
+  color: red;
+}
+\`;
+
+export default props => (
+  <div className={props.isRed ? red.box : blue.box} />
+);
+      
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _cssed_b from '../../.cssed/edb7e408acbb359c_b.module.css'
+import _cssed_a from '../../.cssed/edb7e408acbb359c_a.module.css'
+const blue = _cssed_a
+const red = _cssed_b
+export default (props) => <div className={props.isRed ? red.box : blue.box} />
+
+`;
+
+exports[`macros 3. multi call with external dependency: 3. multi call with external dependency 1`] = `
+
+
+import { css } from '../../lib/macro';
+import { light, dark } from './constant'
+
+const btn = css\`
+.light {
+  color: \${light};
+}
+.dark {
+  color: \${dark};
+}
+\`;
+
+export default props => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+);
+      
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _cssed_a from '../../.cssed/edb7e408acbb359c.module.css'
+import { light, dark } from './constant'
+const btn = _cssed_a
+export default (props) => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+)
+
+`;
+
+exports[`macros 4. function call in expression: 4. function call in expression 1`] = `
+
+
+import { css } from '../../lib/macro';
+import { light, dark } from './constant'
+
+const darkOrLight = (bool) => bool ? light : dark
+const btn = css\`
+.light {
+  color: \${darkOrLight(true)};
+}
+.dark {
+  color: \${darkOrLight(false)};
+}
+\`;
+
+export default props => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+);
+      
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _cssed_a from '../../.cssed/edb7e408acbb359c.module.css'
+import { light, dark } from './constant'
+const darkOrLight = (bool) => (bool ? light : dark)
+const btn = _cssed_a
+export default (props) => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+)
+
+`;
+
+exports[`macros 5. test url rebase: 5. test url rebase 1`] = `
+
+
+import { css } from '../../lib/macro';
+
+const btn = css\`
+.light {
+  background-image: url("star.gif");
+  list-style-image: url('../images/bullet.jpg');
+  font-family: 'Open Sans', sans-serif;
+  border-image: url('border.png');
+  content: url('/content.png');
+  content: url(data:image/png;base64,iVBORw0KGgoAAAA);
+}
+\`;
+
+export default props => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+);
+      
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _cssed_a from '../../.cssed/edb7e408acbb359c.module.css'
+const btn = _cssed_a
+export default (props) => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+)
+
+`;
