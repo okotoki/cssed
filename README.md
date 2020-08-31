@@ -1,7 +1,11 @@
 <img src="media/header.svg" width="800" align="center" alt="Type-safe Iframe ↔ Main Thread communication for good 🧐"/>
 
 # cssed
-🤷‍♂️ CSS-in-JS modules that lets you write CSS in JS, plays nicely with NextJS/create-react-app/Webpack, is blazingly fast zero-runtime by accident and zero-configuration by choice.
+🤷‍♂️ CSS-in-JS modules that:
+- lets you write CSS in JS, 
+- plays nicely with NextJS/create-react-app/Webpack, 
+- is blazingly fast zero-runtime by accident
+- and zero-configuration by choice
 
 ## Rationale
 Why create another CSS-in-JS library? Well, I tried hard to avoid doing it, but couldn't find one which does what I want. And I don't want much:
@@ -94,8 +98,19 @@ And file `.index.module.css` contains extracted css:
 From here Webpack will handle it as a regular file, which has imported CSS and will process it accordingly to configured pipeline. 
 
 ## Syntax Highlight
+Same as for `styled-jsx` package.
 
+### [Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=blanu.vscode-styled-jsx)
+Launch VS Code Quick Open (⌘+P), paste the following command, and press enter.
+```
+ext install vscode-styled-jsx
+```
 
+### Autocomplete [Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=AndrewRazumovsky.vscode-styled-jsx-languageserver)
+Launch VS Code Quick Open (⌘+P), paste the following command, and press enter.
+```
+ext install vscode-styled-jsx-languageserver
+```
 
 ## Caveats
 
