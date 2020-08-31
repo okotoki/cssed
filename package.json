@@ -1,6 +1,6 @@
 {
   "name": "cssed",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "🤷‍♂️CSS-in-JS modules that just works",
   "exports": {
     "macro": "./lib/macro.js"
