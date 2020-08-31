@@ -4,8 +4,8 @@
 🤷‍♂️ CSS-in-JS modules that:
 - lets you write CSS in JS, 
 - plays nicely with NextJS/create-react-app/Webpack, 
-- is blazingly fast zero-runtime by accident
-- and zero-configuration by choice
+- ⚡️ blazingly fast **zero-runtime** by accident
+- and **zero-configuration** by choice
 
 ## Rationale
 Why create another CSS-in-JS library? Well, I tried hard to avoid doing it, but couldn't find one which does what I want. And I don't want much:
@@ -14,7 +14,6 @@ Why create another CSS-in-JS library? Well, I tried hard to avoid doing it, but 
 2. Write pure CSS/SASS/stylus but in JS.
 3. Media queries and pseudoclasses support.
 4. Seamless intergration with framework (NextJS in my case). 
-5. ⚡️Blazingly fast
 
 More on struggle finding existing solution [here](https://twitter.com/opudalo/status/1296793870697668612)
 
