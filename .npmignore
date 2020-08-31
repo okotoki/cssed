@@ -1,0 +1,12 @@
+.gitignore
+.vscode
+README.md
+src
+examples
+media
+tsconfig.json
+.eslintrc.js
+.eslintignore
+.prettierrc
+yarn.lock
+package-lock.json

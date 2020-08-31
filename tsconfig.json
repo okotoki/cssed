@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "outDir": "lib",
+    "declarationDir": "lib",
+    "target": "es5",
+    "lib": ["esnext"],
+    "sourceMap": true,
+    "declaration": true,
+    "module": "commonjs",
+    "strict": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": ["node_modules/@types", "./custom_typings"],
+    "moduleResolution": "node",
+    "skipLibCheck": true
+  },
+  "include": [
+      "src"
+  ],
+  "exclude": ["lib", "node_modules"]
+}
