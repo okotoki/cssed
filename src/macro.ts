@@ -116,7 +116,7 @@ export default createMacro(({ references, state: s, babel }) => {
      * Macros runs in single file mode, so we can pass ['0'] reference.
      */
     addDefault(cssRefs[0], './' + basename(out), {
-      nameHint: importName
+      nameHint: '_cssed' + importName
     })
 
     // Read the file first to compare the content

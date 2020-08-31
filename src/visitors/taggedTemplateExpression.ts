@@ -176,7 +176,7 @@ export default function TaggedTemplateExpression(
   })
 
   const importName = `_${numToChar(state.index)}`
-  path.replaceWith(types.identifier(importName))
+  path.replaceWith(types.identifier('_cssed' + importName))
 
   const result: CSSed = {
     cssText,

@@ -1,10 +1,8 @@
 {
   "name": "cssed",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "🤷‍♂️CSS-in-JS modules that just works",
-  "exports": {
-    "macro": "./lib/macro.js"
-  },
+  "main": "./lib/index.js",
   "scripts": {
     "watch": "tsc -w",
     "test": "jest",

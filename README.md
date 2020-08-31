@@ -1,4 +1,4 @@
-<img src="media/header.svg" width="800" align="center" alt="Type-safe Iframe ↔ Main Thread communication for good 🧐"/>
+<img src="media/header.svg" width="800" align="center" alt="cssed"/>
 
 # cssed
 🤷‍♂️ CSS-in-JS modules that:
@@ -111,6 +111,8 @@ Launch VS Code Quick Open (⌘+P), paste the following command, and press enter.
 ext install vscode-styled-jsx-languageserver
 ```
 
+<img src="media/autocomplete.png" width="400" align="center" alt="Autocomplete"/>
+
 ## Caveats
 
 Compilation has artifacts in the form of CSS files generated and placed next to source file. They are made hidden to avoid confusion, but it is suboptimal.
@@ -180,7 +182,7 @@ const styles = css`
 
 ## Gimmicks:
 CSSed is dead-simple CSS-in-JS implementation, without any gimmicks. Here is one if you need it:**[*](https://en.wikipedia.org/wiki/ASCII_stereogram)**
-<img src="media/gimmick.svg" width="800" align="center" alt="Type-safe Iframe ↔ Main Thread communication for good 🧐"/>
+<img src="media/gimmick.svg" width="800" align="center" alt="Can you read it? 🧐"/>
 
 ## License 
 MIT
