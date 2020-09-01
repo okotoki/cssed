@@ -130,10 +130,12 @@ export default createMacro(({ references, state: s, babel }) => {
       // Ignore error
     }
 
+    const warning = '/* AUTO GENERATED FILE. DO NOT EDIT  */\n'
+    const content = warning + cssText
     // if the files hasn't changed, nothing more to do
-    if (currentCssText === cssText) return
 
-    writeFileSync(out, cssText)
+    if (currentCssText === content) return
+    writeFileSync(out, content)
   })
 })
 

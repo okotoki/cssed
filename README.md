@@ -37,7 +37,7 @@ No configuration required as long as you have enabled `plugin-macros` in your `.
 }
 ```
 
-Also, to add compilation artifcats to `gitignore`:
+Also, add compilation artifcats to `gitignore`:
 
 ```sh
 # cssed compilation artifacts 

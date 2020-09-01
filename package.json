@@ -1,19 +1,22 @@
 {
   "name": "cssed",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "🤷‍♂️CSS-in-JS modules that just works",
   "main": "./lib/index.js",
   "scripts": {
     "watch": "tsc -w",
-    "test": "jest",
-    "build": "NODE_ENV=production tsc"
+    "test": "tsc && jest",
+    "build": "jest && NODE_ENV=production tsc"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/okotoki/cssed.git"
   },
   "keywords": [
-    "CSS-in-JS"
+    "CSS-in-JS",
+    "babel-plugin-macros",
+    "babel-macros",
+    "macro"
   ],
   "author": "Okotoki",
   "license": "MIT",

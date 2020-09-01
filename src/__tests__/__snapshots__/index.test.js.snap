@@ -24,12 +24,12 @@ export default props => (
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import _a from './.index.test.module.css'
+import _cssed_a from './.index.test.module.css'
 import { light, dark } from './constant'
 
 const darkOrLight = (bool) => (bool ? light : dark)
 
-const btn = _a
+const btn = _cssed_a
 export default (props) => (
   <>
     <div className={btn.light} />
@@ -62,10 +62,10 @@ export default props => (
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import _b from './.index.test.b.module.css'
-import _a from './.index.test.a.module.css'
-const blue = _a
-const red = _b
+import _cssed_b from './.index.test.b.module.css'
+import _cssed_a from './.index.test.a.module.css'
+const blue = _cssed_a
+const red = _cssed_b
 export default (props) => <div className={props.isRed ? red.box : blue.box} />
 
 
@@ -94,9 +94,9 @@ export default props => (
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import _a from './.index.test.module.css'
+import _cssed_a from './.index.test.module.css'
 import { light, dark } from './constant'
-const btn = _a
+const btn = _cssed_a
 export default (props) => (
   <>
     <div className={btn.light} />
@@ -119,8 +119,8 @@ const styles = css\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import _a from './.index.test.module.css'
-const styles = _a
+import _cssed_a from './.index.test.module.css'
+const styles = _cssed_a
 
 
 `;
