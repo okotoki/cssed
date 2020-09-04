@@ -146,7 +146,7 @@ type CSSProperties = {
 export function css(
   _strings: TemplateStringsArray,
   ..._exprs: Array<string | number | CSSProperties>
-): string {
+): { [ket: string]: string } {
   throw new Error(
     'Using the "css" tag in runtime is not supported. Make sure you have set up the Babel plugin correctly.'
   )

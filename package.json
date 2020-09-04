@@ -1,12 +1,13 @@
 {
   "name": "cssed",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "🤷‍♂️CSS-in-JS modules that just works",
   "main": "./lib/index.js",
   "scripts": {
     "watch": "tsc -w",
     "test": "tsc && jest",
-    "build": "jest && NODE_ENV=production tsc && cp lib/macro.d.ts ./"
+    "build": "jest && NODE_ENV=production tsc && cp lib/macro.d.ts ./",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
