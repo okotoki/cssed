@@ -124,3 +124,128 @@ const styles = _cssed_a
 
 
 `;
+
+exports[`unknown plugin function call in expression: function call in expression 1`] = `
+
+import { css } from '../../lib/macro';
+import { light, dark } from './constant'
+
+const darkOrLight = (bool) => bool ? light : dark
+const btn = css\`
+.light {
+  color: \${darkOrLight(true)};
+}
+.dark {
+  color: \${darkOrLight(false)};
+}
+\`;
+
+export default props => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+);
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _cssed_a from './.index.test.module.css'
+import { light, dark } from './constant'
+
+const darkOrLight = (bool) => (bool ? light : dark)
+
+const btn = _cssed_a
+export default (props) => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+)
+
+
+`;
+
+exports[`unknown plugin multi call macro: multi call macro 1`] = `
+
+import { css } from '../../lib/macro';
+
+const blue = css\`
+.box {
+  color: blue;
+}
+\`;
+
+const red = css\`
+.box {
+  color: red;
+}
+\`;
+
+export default props => (
+  <div className={props.isRed ? red.box : blue.box} />
+);
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _cssed_b from './.index.test.b.module.css'
+import _cssed_a from './.index.test.a.module.css'
+const blue = _cssed_a
+const red = _cssed_b
+export default (props) => <div className={props.isRed ? red.box : blue.box} />
+
+
+`;
+
+exports[`unknown plugin multi call with external dependency: multi call with external dependency 1`] = `
+
+import { css } from '../../lib/macro';
+import { light, dark } from './constant'
+
+const btn = css\`
+.light {
+  color: \${light};
+}
+.dark {
+  color: \${dark};
+}
+\`;
+
+export default props => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+);
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _cssed_a from './.index.test.module.css'
+import { light, dark } from './constant'
+const btn = _cssed_a
+export default (props) => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+)
+
+
+`;
+
+exports[`unknown plugin single call macro: single call macro 1`] = `
+
+import { css } from '../../lib/macro';
+
+const styles = css\`
+  .box {
+    color: blue
+  }
+\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _cssed_a from './.index.test.module.css'
+const styles = _cssed_a
+
+
+`;

@@ -7,12 +7,12 @@ type LogLevel = 'error' | 'warn' | 'info' | 'debug'
 const levels = ['error', 'warn', 'info', 'debug']
 const currentLevel = levels.indexOf(process.env.LINARIA_LOG || 'error')
 
-const linariaLogger = genericDebug('linaria')
+const cssedLogger = genericDebug('cssed')
 
 const loggers = new Map<string, Debugger>()
 
 function gerOrCreate(namespace: string | null | undefined): Debugger {
-  if (!namespace) return linariaLogger
+  if (!namespace) return cssedLogger
   const lastIndexOf = namespace.lastIndexOf(':')
   if (!loggers.has(namespace)) {
     loggers.set(

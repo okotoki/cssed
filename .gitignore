@@ -92,6 +92,15 @@ lib
 # vuepress build output
 .vuepress/dist
 
+# yarn
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # Serverless directories
 .serverless/
 

@@ -8,5 +8,8 @@ tsconfig.json
 .eslintrc.js
 .eslintignore
 .prettierrc
+.yarn
 yarn.lock
+yarn-error.log
+.yarnrc.yml
 package-lock.json
