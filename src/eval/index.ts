@@ -3,9 +3,8 @@ import generator from '@babel/generator'
 
 import Module from './module'
 
-import type { PluginItem, TransformOptions } from '@babel/core'
 import type { NodePath } from '@babel/traverse'
-import type { Location, Value, EvalRule } from '../types'
+import type { EvalRule, Location, Value } from '../types'
 
 interface IRequirement {
   result: types.Node
@@ -50,7 +49,7 @@ const resolve = (
             (p.parentPath.node as types.ImportDeclaration).source
           )
         } else {
-          result = binding.path.parentPath.node
+          result = binding.path.parentPath!.node
         }
         break
       case 'const':

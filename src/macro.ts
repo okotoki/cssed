@@ -7,14 +7,14 @@ import taggedTemplateExpression, { State } from './visitors/taggedTemplateExpres
 
 const { addDefault } = require('@babel/helper-module-imports')
 
-import type { Node, TaggedTemplateExpression } from '@babel/types'
 import type { NodePath } from '@babel/core'
-import type { Evaluator, EvalRule } from './types'
+import type { Node, TaggedTemplateExpression } from '@babel/types'
+import type { EvalRule, Evaluator } from './types'
 
 const assertType = (path: NodePath<Node>, type: string) => {
-  if (path.parentPath.type !== type)
+  if (!path.parentPath || path.parentPath.type !== type)
     throw new Error(
-      `cssed/macro can only be used as ${type}. You tried ${path.parentPath.type}.`
+      `cssed/macro can only be used as ${type}. You tried ${path.parentPath?.type}.`
     )
 }
 
@@ -98,12 +98,12 @@ export default createMacro(({ references, state: s, babel }) => {
     const fn = join(
       dirname(filename),
       filenamePrefix +
-        basename(
-          filename.replace(
-            /\.[^.]+$/,
-            (multiple ? '.' + importName.replace('_', '') : '') + '.module.css'
-          )
+      basename(
+        filename.replace(
+          /\.[^.]+$/,
+          (multiple ? '.' + importName.replace('_', '') : '') + '.module.css'
         )
+      )
     )
 
     // output css file

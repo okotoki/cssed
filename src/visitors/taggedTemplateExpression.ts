@@ -146,7 +146,7 @@ export default function TaggedTemplateExpression(
             evaluation = evaluate(ex, types, state.file.opts.filename!, rules)
           } catch (e) {
             throw ex.buildCodeFrameError(
-              `An error occurred when evaluating the expression: ${e.message}. Make sure you are not using a browser or Node specific API.`
+              `An error occurred when evaluating the expression: ${(e as Error).message}. Make sure you are not using a browser or Node specific API.`
             )
           }
 
