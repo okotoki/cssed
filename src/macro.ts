@@ -1,15 +1,26 @@
 import * as babel from '@babel/core'
 import { createMacro, MacroError } from 'babel-plugin-macros'
-import { readFileSync, writeFileSync } from 'fs'
-import { basename, dirname, join, relative } from 'path'
-
-import taggedTemplateExpression, { State } from './visitors/taggedTemplateExpression'
-
+import { createHash } from 'crypto'
+import { mkdirSync, readFileSync, writeFileSync } from 'fs'
+import { basename, dirname, join, relative, resolve } from 'path'
+import taggedTemplateExpression from './visitors/taggedTemplateExpression'
 const { addDefault } = require('@babel/helper-module-imports')
 
 import type { NodePath } from '@babel/core'
 import type { Node, TaggedTemplateExpression } from '@babel/types'
 import type { EvalRule, Evaluator } from './types'
+import type { State } from './visitors/taggedTemplateExpression'
+
+const IMPORT_NAME = 'css'
+const CACHE_DIR = join(process.cwd(), '.cssed')
+
+const createHashFn = (data: string, len: number) => {
+  return createHash("shake256", { outputLength: len })
+    .update(data)
+    .digest("hex");
+}
+
+const hash = (data: string) => createHashFn(data, 8)
 
 const assertType = (path: NodePath<Node>, type: string) => {
   if (!path.parentPath || path.parentPath.type !== type)
@@ -18,7 +29,6 @@ const assertType = (path: NodePath<Node>, type: string) => {
     )
 }
 
-const IMPORT_NAME = 'css'
 const assertName = (refName: string) => {
   if (refName !== IMPORT_NAME) {
     throw new MacroError(
@@ -46,6 +56,8 @@ const rules: EvalRule[] = [
 ]
 
 export default createMacro(({ references, state: s, babel }) => {
+  mkdirSync(CACHE_DIR, { recursive: true })
+  const cwd = process.cwd()
   const state = s as State
   /**
    * Enforce`css` as named import so people
@@ -84,30 +96,23 @@ export default createMacro(({ references, state: s, babel }) => {
   // never
   if (!filename) return
 
+  const dir = dirname(filename)
+  const cleanFilename = basename(filename).replace(/\?.*$/, '')
+  const relativeDirname = relative(cwd, dir)
+  const relativeFilenamePath = join(relativeDirname, cleanFilename)
+
   /**
    * For each reference do:
    * - add import statement
-   * - generate CSS file next to file where function was called
+   * - generate CSS file in the cache directory .cssed
    */
-  const makeFilesHidden = true
-  const filenamePrefix = makeFilesHidden ? '.' : ''
-
   state.cssed.forEach(({ importName, cssText }, i, self) => {
     const multiple = self.length > 1
 
-    const fn = join(
-      dirname(filename),
-      filenamePrefix +
-      basename(
-        filename.replace(
-          /\.[^.]+$/,
-          (multiple ? '.' + importName.replace('_', '') : '') + '.module.css'
-        )
-      )
-    )
-
     // output css file
-    const out = relative(process.cwd(), fn)
+    const outFile = hash(relativeFilenamePath) + (multiple ? importName : '') + '.module.css'
+    const outFilePath = join(CACHE_DIR, outFile)
+    const importFilePath = relative(dir, outFilePath)
 
     /**
      * include this file as an import to the referenced module,
@@ -115,7 +120,7 @@ export default createMacro(({ references, state: s, babel }) => {
      *
      * Macros runs in single file mode, so we can pass ['0'] reference.
      */
-    addDefault(cssRefs[0], './' + basename(out), {
+    addDefault(cssRefs[0], importFilePath, {
       nameHint: '_cssed' + importName
     })
 
@@ -125,19 +130,34 @@ export default createMacro(({ references, state: s, babel }) => {
     let currentCssText
 
     try {
-      currentCssText = readFileSync(out, 'utf-8')
+      currentCssText = readFileSync(outFilePath, 'utf-8')
     } catch (e) {
       // Ignore error
     }
 
     const warning = '/* AUTO GENERATED FILE. DO NOT EDIT  */\n'
-    const content = warning + cssText
+    const content = warning + rebaseUrlInCss(cssText, dir, CACHE_DIR)
     // if the files hasn't changed, nothing more to do
 
     if (currentCssText === content) return
-    writeFileSync(out, content)
+    writeFileSync(outFilePath, content)
   })
 })
+
+const rebaseUrlInCss = (cssText: string, cssFileDir: string, cacheDir: string) => {
+  const regex = /url\((["']?)(.*?)\1\)/g
+
+  const rebasedCSS = cssText.replace(regex, (match, quote, url) => {
+    if (!/^(\/|data:|http[s]?)/i.test(url)) {
+      const absolutePath = relative(cacheDir, resolve(cssFileDir, url))
+      // console.log('rebaseUrlInCss', resolve(cssFileDir, url), cacheDir, absolutePath, url)
+      return `url(${quote}${absolutePath}${quote})`
+    }
+    return match
+  })
+
+  return rebasedCSS
+}
 
 type CSSProperties = {
   [key: string]: string | number | CSSProperties

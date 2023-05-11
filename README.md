@@ -17,12 +17,38 @@ Why create another CSS-in-JS library? Well, I tried hard to avoid doing it, but 
 
 More on struggle finding existing solution [here](https://twitter.com/opudalo/status/1296793870697668612)
 
-## Installation
-`yarn add cssed` or `npm i cssed`.  
+## Caveat
 
-A peer-dependency of [`babel-plugin-macros`](https://github.com/kentcdodds/babel-plugin-macros) is required, so if you don't have it `yarn add babel-plugin-macros`
+Compilation artifacts generated and placed in `.cssed` folder in the root of your project. We did our best to rebase `url()` in the CSS.
+
+If it causes any issues use `1.*` version of the package, where artifacts are put next to the source files and no rebase happens at all.
+
+## Installation
+```sh
+npm i cssed
+```
+
+A peer-dependency of [`babel-plugin-macros`](https://github.com/kentcdodds/babel-plugin-macros) is required, so if you don't have it `npm i babel-plugin-macros`
 
 ## Configuration
+
+### With Vite
+
+Requires `npm i vite-plugin-babel-macros` package and small addition to `vite.config.js`:
+
+```js
+import macrosPlugin from 'vite-plugin-babel-macros';
+
+export default {
+  plugins: [
+    // ... 
+    macrosPlugin(),
+    // ...
+  ]
+}
+```
+
+### With webpack/next/babel
 
 No configuration required as long as you have enabled `plugin-macros` in your `.babelrc`:
 
@@ -41,8 +67,9 @@ Also, add compilation artifcats to `gitignore`:
 
 ```sh
 # cssed compilation artifacts 
-.*.module.css
+.cssed
 ```
+
 ## Usage
 
 ```jsx
@@ -82,14 +109,14 @@ const Box = props => <div className={styles.red}></div>
 After compilation with `cssed`:
 ```jsx
 // index.js – compiled with cssed macro
-import _a from './.index.module.css'
+import _a from '../.cssed/[hash].module.css'
 const styles = _a
 
 const Box = props => <div className={styles.red}></div>
 ```
-And file `.index.module.css` contains extracted css:
+And file `[hash].module.css` contains extracted css:
 ```css 
-/* .index.module.css */ 
+/* [hash].module.css */ 
 /* AUTO GENERATED FILE. DO NOT EDIT  */
 .red { color: red; }
 ```
@@ -112,12 +139,6 @@ ext install vscode-styled-jsx-languageserver
 ```
 
 <img src="media/autocomplete.png" width="400" align="center" alt="Autocomplete"/>
-
-## Caveats
-
-Compilation has artifacts in the form of CSS files generated and placed next to source file. They are made hidden to avoid confusion, but it is suboptimal.
-
-What could be improved – place files in `.cssed-cache` folder in root, and import those files from there. But that would mean we need to pre-process `css` and replace paths for any `url()` calls 
 
 ## Prior art
 

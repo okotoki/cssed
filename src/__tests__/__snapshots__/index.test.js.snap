@@ -14,7 +14,7 @@ const styles = css\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import _cssed_a from './.index.test.module.css'
+import _cssed_a from '../../.cssed/edb7e408acbb359c.module.css'
 const styles = _cssed_a
 
 `;
@@ -43,8 +43,8 @@ export default props => (
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import _cssed_b from './.index.test.b.module.css'
-import _cssed_a from './.index.test.a.module.css'
+import _cssed_b from '../../.cssed/edb7e408acbb359c_b.module.css'
+import _cssed_a from '../../.cssed/edb7e408acbb359c_a.module.css'
 const blue = _cssed_a
 const red = _cssed_b
 export default (props) => <div className={props.isRed ? red.box : blue.box} />
@@ -76,7 +76,7 @@ export default props => (
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import _cssed_a from './.index.test.module.css'
+import _cssed_a from '../../.cssed/edb7e408acbb359c.module.css'
 import { light, dark } from './constant'
 const btn = _cssed_a
 export default (props) => (
@@ -114,9 +114,46 @@ export default props => (
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import _cssed_a from './.index.test.module.css'
+import _cssed_a from '../../.cssed/edb7e408acbb359c.module.css'
 import { light, dark } from './constant'
 const darkOrLight = (bool) => (bool ? light : dark)
+const btn = _cssed_a
+export default (props) => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+)
+
+`;
+
+exports[`macros 5. test url rebase: 5. test url rebase 1`] = `
+
+
+import { css } from '../../lib/macro';
+
+const btn = css\`
+.light {
+  background-image: url("star.gif");
+  list-style-image: url('../images/bullet.jpg');
+  font-family: 'Open Sans', sans-serif;
+  border-image: url('border.png');
+  content: url('/content.png');
+  content: url(data:image/png;base64,iVBORw0KGgoAAAA);
+}
+\`;
+
+export default props => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+);
+      
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _cssed_a from '../../.cssed/edb7e408acbb359c.module.css'
 const btn = _cssed_a
 export default (props) => (
   <>

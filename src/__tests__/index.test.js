@@ -87,5 +87,29 @@ pluginTester({
         );
       `,
     },
+    {
+      title: 'test url rebase',
+      code: `
+        import { css } from '../../lib/macro';
+
+        const btn = css\`
+        .light {
+          background-image: url("star.gif");
+          list-style-image: url('../images/bullet.jpg');
+          font-family: 'Open Sans', sans-serif;
+          border-image: url('border.png');
+          content: url('/content.png');
+          content: url(data:image/png;base64,iVBORw0KGgoAAAA);
+        }
+        \`;
+
+        export default props => (
+          <>
+            <div className={btn.light} />
+            <div className={btn.dark} />
+          </>
+        );
+      `,
+    }
   ],
 });
