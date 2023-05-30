@@ -6,7 +6,6 @@ import type { Serializable } from '../types'
 
 // Throw if we can't handle the interpolated value
 export default function throwIfInvalid(
-  // eslint-disable-next-line @typescript-eslint/ban-types
   value: Error | Function | string | number | Serializable | undefined,
   ex: any
 ): void {
@@ -27,7 +26,7 @@ export default function throwIfInvalid(
   > ${value.message}.
 
   Make sure you are not using a browser or Node specific API and all the variables are available in static context.
-  Linaria have to extract pieces of your code to resolve the interpolated values.
+  Cssed have to extract pieces of your code to resolve the interpolated values.
   Defining styled component or class will not work inside:
     - function,
     - class,

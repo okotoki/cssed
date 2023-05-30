@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`macros 1. single call macro: 1. single call macro 1`] = `
+exports[`cssed 1. single call macro: 1. single call macro 1`] = `
 
 
-import { css } from '../../lib/macro';
+import { css } from 'cssed';
 
 const styles = css\`
   .box {
@@ -19,10 +19,32 @@ const styles = _cssed_a
 
 `;
 
-exports[`macros 2. multi call macro: 2. multi call macro 1`] = `
+exports[`cssed 2. single call evaluation: 2. single call evaluation 1`] = `
 
 
-import { css } from '../../lib/macro';
+import { css } from 'cssed';
+
+const blue = 'blue'
+
+const styles = css\`
+  .box {
+    color: \${blue}
+  }
+\`
+      
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _cssed_a from '../../.cssed/edb7e408acbb359c.module.css'
+const blue = 'blue'
+const styles = _cssed_a
+
+`;
+
+exports[`cssed 3. multi call macro: 3. multi call macro 1`] = `
+
+
+import { css } from 'cssed';
 
 const blue = css\`
 .box {
@@ -51,11 +73,11 @@ export default (props) => <div className={props.isRed ? red.box : blue.box} />
 
 `;
 
-exports[`macros 3. multi call with external dependency: 3. multi call with external dependency 1`] = `
+exports[`cssed 4. multi call with external dependency: 4. multi call with external dependency 1`] = `
 
 
-import { css } from '../../lib/macro';
-import { light, dark } from './constant'
+import { css } from 'cssed';
+import { light, dark } from './module'
 
 const btn = css\`
 .light {
@@ -77,7 +99,7 @@ export default props => (
       ↓ ↓ ↓ ↓ ↓ ↓
 
 import _cssed_a from '../../.cssed/edb7e408acbb359c.module.css'
-import { light, dark } from './constant'
+import { light, dark } from './module'
 const btn = _cssed_a
 export default (props) => (
   <>
@@ -88,10 +110,47 @@ export default (props) => (
 
 `;
 
-exports[`macros 4. function call in expression: 4. function call in expression 1`] = `
+exports[`cssed 5. multi call with external module dependency: 5. multi call with external module dependency 1`] = `
 
 
-import { css } from '../../lib/macro';
+import { css } from 'cssed';
+import { light, dark } from './module'
+
+const btn = css\`
+.light {
+  color: \${light};
+}
+.dark {
+  color: \${dark};
+}
+\`;
+
+export default props => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+);
+      
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _cssed_a from '../../.cssed/edb7e408acbb359c.module.css'
+import { light, dark } from './module'
+const btn = _cssed_a
+export default (props) => (
+  <>
+    <div className={btn.light} />
+    <div className={btn.dark} />
+  </>
+)
+
+`;
+
+exports[`cssed 6. function call in expression: 6. function call in expression 1`] = `
+
+
+import { css } from 'cssed';
 import { light, dark } from './constant'
 
 const darkOrLight = (bool) => bool ? light : dark
@@ -127,10 +186,10 @@ export default (props) => (
 
 `;
 
-exports[`macros 5. test url rebase: 5. test url rebase 1`] = `
+exports[`cssed 7. test url rebase: 7. test url rebase 1`] = `
 
 
-import { css } from '../../lib/macro';
+import { css } from 'cssed';
 
 const btn = css\`
 .light {

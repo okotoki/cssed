@@ -1,11 +1,21 @@
+import type { Serializable } from '../types'
+
 import isBoxedPrimitive from './isBoxedPrimitive'
 
-import type { Serializable } from '../types'
-export default function isSerializable(o: any): o is Serializable {
+export default function isSerializable(o: unknown): o is Serializable {
+  if (Array.isArray(o)) {
+    return o.every(isSerializable)
+  }
+
+  if (o === null) return true
+
+  if (isBoxedPrimitive(o)) return true
+
+  if (typeof o === 'object') {
+    return Object.values(o).every(isSerializable)
+  }
+
   return (
-    (Array.isArray(o) && o.every(isSerializable)) ||
-    (typeof o === 'object' &&
-      o !== null &&
-      (o.constructor.name === 'Object' || isBoxedPrimitive(o)))
+    typeof o === 'string' || typeof o === 'number' || typeof o === 'boolean'
   )
 }

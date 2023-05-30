@@ -4,7 +4,7 @@ import generator from '@babel/generator'
 import Module from './module'
 
 import type { NodePath } from '@babel/traverse'
-import type { EvalRule, Location, Value } from '../types'
+import type { Location, Value } from '../types'
 
 interface IRequirement {
   result: types.Node
@@ -93,12 +93,7 @@ const resolve = (
   }
 }
 
-export default function evaluate(
-  path: any,
-  t: any,
-  filename: string,
-  rules: EvalRule[]
-) {
+export default function evaluate(path: any, t: any, filename: string) {
   if (t.isSequenceExpression(path)) {
     // We only need to evaluate the last item in a sequence expression, e.g. (a, b, c)
     // eslint-disable-next-line no-param-reassign
@@ -155,24 +150,23 @@ export default function evaluate(
     t.blockStatement([expression])
   )
 
-  const m = new Module(filename, rules)
+  const m = new Module(filename, {
+    extensions: ['.cjs', '.json', '.js', '.jsx', '.mjs', '.ts', '.tsx'],
+    evaluate: true,
+    babelOptions: {}
+  })
 
   m.dependencies = []
   m.transform = function transform(this: Module, text) {
-    console.log('>> here', text)
     return { code: text }
   }
 
-  m.evaluate(
-    [
-      // Use String.raw to preserve escapes such as '\n' in the code
-      // Flow doesn't understand template tags: https://github.com/facebook/flow/issues/2616
-      /* $FlowFixMe */
-      imports.map((node) => String.raw`${generator(node).code}`).join('\n'),
-      /* $FlowFixMe */
-      String.raw`${generator(wrapped).code}`
-    ].join('\n')
-  )
+  const code = [
+    imports.map((node) => String.raw`${generator(node, {}).code}`).join('\n'),
+    String.raw`${generator(wrapped).code}`
+  ].join('\n')
+
+  m.evaluate(code)
 
   return {
     value: m.exports as Value,

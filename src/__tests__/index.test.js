@@ -1,27 +1,55 @@
-import plugin from 'babel-plugin-macros'
 import pluginTester from 'babel-plugin-tester'
+import plugin from '../../lib/index'
 
 pluginTester({
   plugin,
   snapshot: true,
-  babelOptions: { filename: __filename, parserOpts: { plugins: ['jsx'] } },
+  babelOptions: {
+    filename: __filename,
+    parserOpts: {
+      presets: [
+        [
+          'env',
+          {
+            modules: 'commonjs'
+          }
+        ],
+        'react'
+      ],
+      plugins: ['jsx']
+    }
+  },
   tests: [
     {
       title: 'single call macro',
       code: `
-        import { css } from '../../lib/macro';
+        import { css } from 'cssed';
 
         const styles = css\`
           .box {
             color: blue
           }
         \`
-      `,
+      `
+    },
+    {
+      title: 'single call evaluation',
+      code: `
+        import { css } from 'cssed';
+
+        const blue = 'blue'
+
+        const styles = css\`
+          .box {
+            color: \${blue}
+          }
+        \`
+      `
     },
     {
       title: 'multi call macro',
       code: `
-        import { css } from '../../lib/macro';
+        import { css } from 'cssed';
 
         const blue = css\`
         .box {
@@ -38,13 +66,13 @@ pluginTester({
         export default props => (
           <div className={props.isRed ? red.box : blue.box} />
         );
-      `,
+      `
     },
     {
       title: 'multi call with external dependency',
       code: `
-        import { css } from '../../lib/macro';
-        import { light, dark } from './constant'
+        import { css } from 'cssed';
+        import { light, dark } from './module'
 
         const btn = css\`
         .light {
@@ -61,12 +89,35 @@ pluginTester({
             <div className={btn.dark} />
           </>
         );
-      `,
+      `
+    },
+    {
+      title: 'multi call with external module dependency',
+      code: `
+        import { css } from 'cssed';
+        import { light, dark } from './module'
+
+        const btn = css\`
+        .light {
+          color: \${light};
+        }
+        .dark {
+          color: \${dark};
+        }
+        \`;
+
+        export default props => (
+          <>
+            <div className={btn.light} />
+            <div className={btn.dark} />
+          </>
+        );
+      `
     },
     {
       title: 'function call in expression',
       code: `
-        import { css } from '../../lib/macro';
+        import { css } from 'cssed';
         import { light, dark } from './constant'
 
         const darkOrLight = (bool) => bool ? light : dark
@@ -85,12 +136,12 @@ pluginTester({
             <div className={btn.dark} />
           </>
         );
-      `,
+      `
     },
     {
       title: 'test url rebase',
       code: `
-        import { css } from '../../lib/macro';
+        import { css } from 'cssed';
 
         const btn = css\`
         .light {
@@ -109,7 +160,7 @@ pluginTester({
             <div className={btn.dark} />
           </>
         );
-      `,
+      `
     }
-  ],
-});
+  ]
+})

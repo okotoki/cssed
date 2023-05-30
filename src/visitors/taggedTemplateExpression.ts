@@ -1,8 +1,7 @@
 import { types } from '@babel/core'
 import { NodePath } from '@babel/traverse'
 
-import evaluate from '../eval'
-import { EvalRule } from '../types'
+import evaluate from '../babel/eval'
 import isSerializable from '../utils/isSerializable'
 import numToChar from '../utils/numToChar'
 import stripLines from '../utils/stripLines'
@@ -20,12 +19,12 @@ type Interpolation = {
   unit: string
 }
 
-export interface CSSed {
+interface CSSed {
   importName: string
   cssText: string
 }
 
-export interface State extends babel.PluginPass {
+interface State extends babel.PluginPass {
   cssed: CSSed[]
   index: number
 }
@@ -59,8 +58,7 @@ function isRef(path: NodePath<types.TaggedTemplateExpression>) {
 
 export default function TaggedTemplateExpression(
   path: NodePath<types.TaggedTemplateExpression>,
-  state: State,
-  rules: EvalRule[]
+  state: State
 ) {
   const { quasi } = path.node
 
@@ -143,10 +141,12 @@ export default function TaggedTemplateExpression(
           let evaluation
 
           try {
-            evaluation = evaluate(ex, types, state.file.opts.filename!, rules)
+            evaluation = evaluate(ex, types, state.file.opts.filename!)
           } catch (e) {
             throw ex.buildCodeFrameError(
-              `An error occurred when evaluating the expression: ${(e as Error).message}. Make sure you are not using a browser or Node specific API.`
+              `An error occurred when evaluating the expression: ${
+                (e as Error).message
+              }. Make sure you are not using a browser or Node specific API.`
             )
           }
 
@@ -178,12 +178,10 @@ export default function TaggedTemplateExpression(
   const importName = `_${numToChar(state.index)}`
   path.replaceWith(types.identifier('_cssed' + importName))
 
-  const result: CSSed = {
+  state.cssed.push({
     cssText,
     importName
-  }
-
-  state.cssed.push(result)
+  })
 
   if (!isReferenced && !cssText.includes(':global')) {
     return

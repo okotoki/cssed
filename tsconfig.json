@@ -1,21 +1,22 @@
 {
   "compilerOptions": {
-    "outDir": "lib",
-    "declarationDir": "lib",
-    "target": "es5",
+    "outDir": "./lib",
+    "declarationDir": "./lib",
+    "target": "esnext",
     "lib": ["esnext"],
     "sourceMap": true,
     "declaration": true,
-    "module": "commonjs",
+    "module": "CommonJS",
     "strict": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "typeRoots": ["node_modules/@types", "./custom_typings"],
+    "typeRoots": ["node_modules/@types"],
     "moduleResolution": "node",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "skipDefaultLibCheck": true,
+    "preserveWatchOutput": true
   },
-  "include": [
-      "src"
-  ],
-  "exclude": ["lib", "node_modules"]
+  "include": ["src"],
+  "exclude": ["./lib/**/*", "node_modules"]
 }
