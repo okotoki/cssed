@@ -1,6 +1,6 @@
 {
   "name": "cssed",
-  "version": "3.0.6",
+  "version": "3.0.9",
   "description": "🤷‍♂️CSS-in-JS modules that just works",
   "main": "./lib/index.js",
   "scripts": {
@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/okotoki/cssed#readme",
   "devDependencies": {
-    "@babel/preset-env": "^7.21.5",
     "@types/debug": "^4.1.7",
     "@types/node": "^20.1.2",
     "babel-jest": "^29.5.0",
@@ -40,6 +39,10 @@
     "@babel/core": "^7.21.8",
     "@babel/generator": "^7.21.5",
     "@babel/helper-module-imports": "^7.21.4",
+    "@babel/plugin-syntax-jsx": "^7.21.4",
+    "@babel/plugin-syntax-typescript": "^7.21.4",
+    "@babel/plugin-transform-typescript": "^7.22.3",
+    "@babel/preset-env": "^7.22.4",
     "@babel/types": "^7.21.5",
     "debug": "^4.3.4"
   },

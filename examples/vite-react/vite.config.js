@@ -3,5 +3,5 @@ import ssr from 'vite-plugin-ssr/plugin'
 import cssedVitePlugin from 'cssed/vite-plugin'
 
 export default {
-  plugins: [react(), ssr(), cssedVitePlugin()]
+  plugins: [cssedVitePlugin(), react(), ssr()]
 }

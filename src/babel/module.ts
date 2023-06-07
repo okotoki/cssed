@@ -16,7 +16,7 @@ import NativeModule from 'module'
 import path from 'path'
 import vm from 'vm'
 
-import { BabelFileResult, transformSync } from '@babel/core'
+import { BabelFileResult, TransformOptions, transformSync } from '@babel/core'
 
 import getFileIdx from '../utils/getFileIdx'
 import type { StrictOptions } from './types'
@@ -468,9 +468,15 @@ class Module {
     })
 
     try {
-      const code = transformSync(source, {
+      const opts: TransformOptions = {
         presets: ['@babel/preset-env']
-      })
+      }
+
+      if (/\.tsx?$/.test(filename)) {
+        opts.plugins = ['@babel/plugin-transform-typescript']
+      }
+
+      const code = transformSync(source, opts)
 
       const script = new vm.Script(code!.code!, {
         filename

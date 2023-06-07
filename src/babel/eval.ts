@@ -42,7 +42,7 @@ const resolve = (
 
     switch (binding.kind) {
       case 'module':
-        if (types.isImportSpecifier(binding.path)) {
+        if (types.isImportSpecifier(binding.path as types.Node)) {
           const p = binding.path as NodePath<types.ImportSpecifier>
           result = types.importDeclaration(
             [p.node],

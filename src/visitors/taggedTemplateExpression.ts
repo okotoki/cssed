@@ -34,9 +34,9 @@ function isRef(path: NodePath<types.TaggedTemplateExpression>) {
 
   const parent = path.findParent(
     (p) =>
-      types.isObjectProperty(p) ||
-      types.isJSXOpeningElement(p) ||
-      types.isVariableDeclarator(p)
+      types.isObjectProperty(p as types.Node) ||
+      types.isJSXOpeningElement(p as types.Node) ||
+      types.isVariableDeclarator(p as types.Node)
   )
 
   if (parent) {
@@ -134,8 +134,8 @@ export default function TaggedTemplateExpression(
         // Try to preval the value
         if (
           !(
-            types.isFunctionExpression(ex) ||
-            types.isArrowFunctionExpression(ex)
+            types.isFunctionExpression(ex as types.Node) ||
+            types.isArrowFunctionExpression(ex as types.Node)
           )
         ) {
           let evaluation

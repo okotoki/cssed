@@ -1,12 +1,14 @@
 export { Page }
 
+import { css } from 'cssed'
 import React from 'react'
 import { Counter } from './Counter'
-import { css } from 'cssed'
 import { red } from './some'
 
-const styles = css`
+const a = (some: any) => ''
+const styles: any = css`
   .red {
+    ${a('')}
     color: ${red};
   }
 `
