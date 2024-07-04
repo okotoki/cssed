@@ -2,6 +2,7 @@ import type babelCore from '@babel/core'
 import { createHash } from 'crypto'
 import { mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { basename, dirname, join, relative, resolve } from 'path'
+import * as os from 'os'
 import TaggedTemplateExpression from './visitors/taggedTemplateExpression'
 const { addDefault } = require('@babel/helper-module-imports')
 
@@ -31,7 +32,11 @@ interface CSSed {
 
 const PACKAGE_NAME = 'cssed'
 
-const CACHE_DIR = join(process.cwd(), '.cssed')
+const isWindows = os.platform() === 'win32'
+
+const normalizePath = (path: string): string => isWindows ? path.replace(/\\/g, '/') : path
+
+const CACHE_DIR = normalizePath(join(process.cwd(), '.cssed'))
 
 const createHashFn = (data: string, len: number) => {
   return createHash('shake256', { outputLength: len })
@@ -59,7 +64,7 @@ export default function cssedPlugin(): babelCore.PluginObj<VisitorState> {
       const dir = dirname(filename)
       const cleanFilename = basename(filename).replace(/\?.*$/, '')
       const relativeDirname = relative(cwd, dir)
-      const relativeFilenamePath = join(relativeDirname, cleanFilename)
+      const relativeFilenamePath = normalizePath(join(relativeDirname, cleanFilename))
 
       this.cssed.forEach(({ importName, cssText }, _, self) => {
         const multiple = self.length > 1
@@ -69,8 +74,8 @@ export default function cssedPlugin(): babelCore.PluginObj<VisitorState> {
           hash(relativeFilenamePath) +
           (multiple ? importName : '') +
           '.module.css'
-        const outFilePath = join(CACHE_DIR, outFile)
-        const importFilePath = relative(dir, outFilePath)
+        const outFilePath = normalizePath(join(CACHE_DIR, outFile))
+        const importFilePath = normalizePath(relative(dir, outFilePath))
 
         /**
          * include this file as an import to the referenced module,
@@ -127,7 +132,7 @@ const rebaseUrlInCss = (
 
   const rebasedCSS = cssText.replace(regex, (match, quote, url) => {
     if (!/^(\/|data:|http[s]?)/i.test(url)) {
-      const absolutePath = relative(cacheDir, resolve(cssFileDir, url))
+      const absolutePath = normalizePath(relative(cacheDir, resolve(cssFileDir, url)))
       // console.log('rebaseUrlInCss', resolve(cssFileDir, url), cacheDir, absolutePath, url)
       return `url(${quote}${absolutePath}${quote})`
     }
