@@ -1,6 +1,6 @@
 {
   "name": "cssed",
-  "version": "3.0.9",
+  "version": "3.1.0",
   "description": "🤷‍♂️CSS-in-JS modules that just works",
   "main": "./lib/index.js",
   "scripts": {
