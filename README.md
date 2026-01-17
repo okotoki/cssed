@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> Archived. React lost – just use Svelte.
+
+----
+
 <img src="media/header.svg" width="800" align="center" alt="cssed"/>
 
 # cssed
